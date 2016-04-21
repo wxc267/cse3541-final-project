@@ -37,7 +37,7 @@ public class shootarrows : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-        Text arrows = GameObject.Find("UICanvas/ArrowUI/Arrow").GetComponent<Text>();
+        Text arrows = GameObject.Find("hud/ArrowUI/Arrow").GetComponent<Text>();
         arrows.text = arrow_ammo.ToString();
         if (!GetComponent<healthsystem>().IsDead()) {
             if (Input.GetMouseButtonDown(0) && reload_time == 0 && can_shoot)

@@ -37,7 +37,7 @@ public class healthsystem : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-        Text health_point = GameObject.Find("UICanvas/HealthUI/health_point").GetComponent<Text>();
+        Text health_point = GameObject.Find("hud/HealthUI/health_point").GetComponent<Text>();
         health_point.text = hp.ToString();
         if (hp==0)
         {
