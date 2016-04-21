@@ -39,30 +39,34 @@ public class shootarrows : MonoBehaviour {
 	void Update () {
         Text arrows = GameObject.Find("hud/ArrowUI/Arrow").GetComponent<Text>();
         arrows.text = arrow_ammo.ToString();
-        if (!GetComponent<healthsystem>().IsDead()) {
-            if (Input.GetMouseButtonDown(0) && reload_time == 0 && can_shoot)
-            {
-                shoot_arrow();
-                reload_time = 300;
-                can_shoot = false;
-                arrow_ammo--;
-            }
-            if (reload_time > 0)
-            {
-                reload_time--;
-            }
-            else if (reload_time < 10 && !can_shoot&&arrow_ammo>0)
-            {
-                GameObject reloadedBowClone = Instantiate(reloadedbow, currentbow.transform.position, currentbow.transform.rotation) as GameObject;
-                Destroy(currentbow);
-                reloadedBowClone.transform.parent = GameObject.Find("Main Camera").transform;
-                currentbow = GameObject.Find("loadedcrossbow(Clone)");
-                can_shoot = true;
-            }
-        }
-        else
+        if (!GetComponent<PauseManager>().IsPause())
         {
-            Destroy(currentbow);
+            if (!GetComponent<healthsystem>().IsDead())
+            {
+                if (Input.GetMouseButtonDown(0) && reload_time == 0 && can_shoot)
+                {
+                    shoot_arrow();
+                    reload_time = 300;
+                    can_shoot = false;
+                    arrow_ammo--;
+                }
+                if (reload_time > 0)
+                {
+                    reload_time--;
+                }
+                else if (reload_time < 10 && !can_shoot && arrow_ammo > 0)
+                {
+                    GameObject reloadedBowClone = Instantiate(reloadedbow, currentbow.transform.position, currentbow.transform.rotation) as GameObject;
+                    Destroy(currentbow);
+                    reloadedBowClone.transform.parent = GameObject.Find("Main Camera").transform;
+                    currentbow = GameObject.Find("loadedcrossbow(Clone)");
+                    can_shoot = true;
+                }
+            }
+            else
+            {
+                Destroy(currentbow);
+            }
         }
         
     }

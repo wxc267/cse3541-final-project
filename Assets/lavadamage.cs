@@ -17,7 +17,7 @@ public class lavadamage : MonoBehaviour
     }
     void OnTriggerStay(Collider col)
     {
-        if (col.gameObject.layer == LAVA_LAYER && !player.GetComponent<healthsystem>().IsDead())
+        if (col.gameObject.layer == LAVA_LAYER && !player.GetComponent<healthsystem>().IsDead()&& !player.GetComponent<PauseManager>().IsPause())
         {
             if (hit_time > 100)
             {

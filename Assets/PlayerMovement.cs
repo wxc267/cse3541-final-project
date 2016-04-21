@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (!GetComponent<healthsystem>().IsDead())
+        if (!GetComponent<healthsystem>().IsDead()&& !GetComponent<PauseManager>().IsPause())
         {
             if (Input.GetKey(KeyCode.W))
             {

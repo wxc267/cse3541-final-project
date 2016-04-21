@@ -120,7 +120,11 @@ public class zombiemovement : MonoBehaviour {
 
         //the animator will be enabled once zombie see the player. It could make the game have better performance.
         //the zombie will chase the player for a while until when it gose to the player's lost location and it could not see the player.
-        if (!player.GetComponent<healthsystem>().IsDead()&&hp>0)
+       if(player.GetComponent<PauseManager>().IsPause())
+        {
+            animator.enabled = false;
+        }
+        if (!player.GetComponent<healthsystem>().IsDead()&&hp>0&& !player.GetComponent<PauseManager>().IsPause())
         {
             if (OnSight(player.transform))
             {

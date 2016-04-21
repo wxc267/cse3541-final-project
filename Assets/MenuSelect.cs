@@ -4,20 +4,9 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class MenuSelect : MonoBehaviour {
-    
-    GameObject[] mainMenu;
-    GameObject[] about;
-    GameObject[] credit;
+
     // Use this for initialization
     void Start () {
-        /*
-        mainMenu = GameObject.FindGameObjectsWithTag("GameMenu");
-        about = GameObject.FindGameObjectsWithTag("AboutMenu");//root.transform.Find("about");
-        credit = GameObject.FindGameObjectsWithTag("CreditMenu");
-        mainMenu[0].SetActive(true);
-        about[0].SetActive(false);
-        credit[0].SetActive(false);
-        */
     }
 	public void Turn_Red()
     {
@@ -32,7 +21,10 @@ public class MenuSelect : MonoBehaviour {
     {
         SceneManager.LoadScene("test");
     }
-    
+    public void Exit_Menu()
+    {
+        SceneManager.LoadScene("menu");
+    }
     // Update is called once per frame
 
     void Update () {
