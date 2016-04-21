@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class getitem : MonoBehaviour {
@@ -21,6 +22,12 @@ public class getitem : MonoBehaviour {
         {
             player.GetComponent<shootarrows>().Get_Arrow(5);
             Destroy(col.gameObject);
+        }
+        if (col.gameObject.layer == 15)
+        {
+            SceneManager.LoadScene("win");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 	// Update is called once per frame

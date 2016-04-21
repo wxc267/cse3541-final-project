@@ -19,7 +19,7 @@ public class lavadamage : MonoBehaviour
     {
         if (col.gameObject.layer == LAVA_LAYER && !player.GetComponent<healthsystem>().IsDead()&& !player.GetComponent<PauseManager>().IsPause())
         {
-            if (hit_time > 100)
+            if (hit_time > 10)
             {
                 player.GetComponent<healthsystem>().Damage(LAVA_DAMAGE);
                 hit_time = 0;

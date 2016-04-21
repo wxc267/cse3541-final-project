@@ -5,7 +5,9 @@ public class zombiemovement : MonoBehaviour {
     Animator animator;
     GameObject player;
     float fov=120.0f;
-    float zombie_speed = 0.3f;
+    float zombie_speed = 1f;
+    int hit_time = 0;
+    int dead_time = 0;
     GameObject[] cubes;
     RaycastHit hit;
     Vector3 playerLostPosition;
@@ -28,8 +30,19 @@ public class zombiemovement : MonoBehaviour {
             animator.SetInteger("hp", hp);
         }
     }
-
-	void OnCollisionEnter(Collision col)
+    void OnTriggerStay(Collider col)
+    {
+        if (col.gameObject.layer == 10 &&!player.GetComponent<PauseManager>().IsPause())
+        {
+            if (hit_time > 10)
+            {
+                hp -= 10;
+                hit_time = 0;
+            }
+            hit_time++;
+        }
+    }
+    void OnCollisionEnter(Collision col)
     {
         
     }
@@ -114,54 +127,66 @@ public class zombiemovement : MonoBehaviour {
 
 
     }
-	// Update is called once per frame
-	void Update () {
-        Collision_Handler();
+    // Update is called once per frame
+    void Update()
+    {
+        if (Vector3.Distance(transform.position, player.transform.position) < 20)
+        {
+            Collision_Handler();
 
-        //the animator will be enabled once zombie see the player. It could make the game have better performance.
-        //the zombie will chase the player for a while until when it gose to the player's lost location and it could not see the player.
-       if(player.GetComponent<PauseManager>().IsPause())
-        {
-            animator.enabled = false;
-        }
-        if (!player.GetComponent<healthsystem>().IsDead()&&hp>0&& !player.GetComponent<PauseManager>().IsPause())
-        {
-            if (OnSight(player.transform))
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("die"))
             {
-                playerIsLost = false;
-                if (animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
+                dead_time++;
+                if (dead_time > 100)
                 {
-                    transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
-                    transform.Translate(Vector3.forward * zombie_speed * Time.deltaTime);
+                    Destroy(this);
                 }
-                animator.enabled = true;
             }
-            else
+            //the animator will be enabled once zombie see the player. It could make the game have better performance.
+            //the zombie will chase the player for a while until when it gose to the player's lost location and it could not see the player.
+            if (player.GetComponent<PauseManager>().IsPause())
             {
-                if (!playerIsLost)
+                animator.enabled = false;
+            }
+            if (!player.GetComponent<healthsystem>().IsDead() && hp > 0 && !player.GetComponent<PauseManager>().IsPause())
+            {
+                if (OnSight(player.transform))
                 {
-                    playerIsLost = true;
-                    playerLostPosition = player.transform.position;
-                }
-                if (!ArrivePlayerLostPlace())
-                {
-                    transform.LookAt(new Vector3(playerLostPosition.x, transform.position.y, playerLostPosition.z));
-                    transform.Translate(Vector3.forward * zombie_speed * Time.deltaTime);
+                    playerIsLost = false;
+                    if (animator.GetCurrentAnimatorStateInfo(0).IsName("idle"))
+                    {
+                        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
+                        transform.Translate(Vector3.forward * zombie_speed * Time.deltaTime);
+                    }
+                    animator.enabled = true;
                 }
                 else
                 {
+                    if (!playerIsLost)
+                    {
+                        playerIsLost = true;
+                        playerLostPosition = player.transform.position;
+                    }
+                    if (!ArrivePlayerLostPlace())
+                    {
+                        transform.LookAt(new Vector3(playerLostPosition.x, transform.position.y, playerLostPosition.z));
+                        transform.Translate(Vector3.forward * zombie_speed * Time.deltaTime);
+                    }
+                    else
+                    {
 
-                    animator.enabled = false;
+                        animator.enabled = false;
+                    }
                 }
-            }
-            if (Vector3.Distance(player.transform.position, transform.position) < 2f)
-            {
+                if (Vector3.Distance(player.transform.position, transform.position) < 2f)
+                {
 
-                animator.SetBool("attack", true);
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("attack") && Vector3.Distance(player.transform.position, transform.position) < 2f)
-            {
-                player.GetComponent<healthsystem>().Damage(1);
+                    animator.SetBool("attack", true);
+                }
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("attack") && Vector3.Distance(player.transform.position, transform.position) < 2f)
+                {
+                    player.GetComponent<healthsystem>().Damage(1);
+                }
             }
         }
     }

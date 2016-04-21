@@ -46,7 +46,7 @@ public class shootarrows : MonoBehaviour {
                 if (Input.GetMouseButtonDown(0) && reload_time == 0 && can_shoot)
                 {
                     shoot_arrow();
-                    reload_time = 300;
+                    reload_time = 150;
                     can_shoot = false;
                     arrow_ammo--;
                 }

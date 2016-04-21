@@ -19,7 +19,7 @@ public class MenuSelect : MonoBehaviour {
     }
     public void Enter_Game()
     {
-        SceneManager.LoadScene("test");
+        SceneManager.LoadScene("final-main");
     }
     public void Exit_Menu()
     {
