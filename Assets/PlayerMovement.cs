@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
@@ -61,6 +62,17 @@ public class PlayerMovement : MonoBehaviour {
             if(Input.GetKeyDown(KeyCode.F))
             {
                 FlashLight();
+            }
+        }
+        else
+        {
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene("final-main");
+            }
+            if(Input.GetKeyDown(KeyCode.B))
+            {
+                SceneManager.LoadScene("menu");
             }
         }
     }
