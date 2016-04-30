@@ -25,6 +25,10 @@ public class MenuSelect : MonoBehaviour {
     {
         SceneManager.LoadScene("menu");
     }
+    public void Quit()
+    {
+        Application.Quit();
+    }
     // Update is called once per frame
 
     void Update () {
