@@ -32,6 +32,10 @@ public class MenuSelect : MonoBehaviour {
     // Update is called once per frame
 
     void Update () {
-        
+        if(SceneManager.GetActiveScene().name=="win")
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
 	}
 }
